@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TubeMagic - You'll NEVER Create Content the Old Way Again</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #000000;
+            --primary-white: #FFFFFF;
+            --accent-red: #FF0000;
+            --accent-red-soft: rgba(255, 0, 0, 0.1);
+            --accent-red-medium: rgba(255, 0, 0, 0.3);
+            --dark-gray: #1a1a1a;
+            --medium-gray: #333333;
+            --light-gray: #666666;
+            --font-heading: 'Manrope', system-ui, -apple-system, sans-serif;
+            --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--primary-black);
+            color: var(--primary-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-white);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--primary-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-red);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            background: linear-gradient(to bottom, #000000, #1a0000);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.15) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent-red);
+            color: var(--primary-white);
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .cta-button:hover {
+            background: #cc0000;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 3rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-red);
+            width: 0;
+            animation: fillProgress 2s ease-out 1s forwards;
+        }
+
+        @keyframes fillProgress {
+            to { width: 100%; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        /* Pain Points Section */
+        .pain-points {
+            background: var(--dark-gray);
+        }
+
+        .pain-journey {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .pain-card {
+            background: var(--medium-gray);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .pain-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pain-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-red);
+        }
+
+        .quote-box {
+            background: var(--medium-gray);
+            padding: 2rem;
+            border-left: 4px solid var(--accent-red);
+            font-size: 1.3rem;
+            font-style: italic;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        /* Solution Section */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .step {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .comparison-card {
+            background: var(--medium-gray);
+            padding: 2rem;
+            border-radius: 12px;
+        }
+
+        .comparison-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .comparison-card.old-way {
+            border: 2px solid rgba(255, 0, 0, 0.3);
+        }
+
+        .comparison-card.new-way {
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, var(--medium-gray), #2a0000);
+        }
+
+        .comparison-list {
+            list-style: none;
+        }
+
+        .comparison-list li {
+            padding: 0.8rem 0;
+            display: flex;
+            align-items: start;
+            gap: 0.5rem;
+        }
+
+        .comparison-list li::before {
+            content: '✗';
+            color: var(--accent-red);
+            font-size: 1.2rem;
+        }
+
+        .new-way .comparison-list li::before {
+            content: '✓';
+            color: #00ff00;
+        }
+
+        /* Social Proof */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-red);
+            font-family: var(--font-heading);
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .testimonials {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .testimonial-carousel {
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .testimonial-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .testimonial {
+            min-width: 100%;
+            background: var(--medium-gray);
+            padding: 3rem;
+            border-radius: 12px;
+        }
+
+        .testimonial-stars {
+            color: #ffd700;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-text {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--accent-red);
+        }
+
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .carousel-dot.active {
+            background: var(--accent-red);
+        }
+
+        .live-update {
+            text-align: center;
+            margin-top: 2rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature {
+            display: flex;
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .feature-icon {
+            color: var(--accent-red);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .feature-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .bonus-box {
+            background: linear-gradient(135deg, var(--accent-red-soft), var(--accent-red-medium));
+            border: 2px solid var(--accent-red);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .bonus-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        /* FAQ Section */
+        .faq {
+            background: var(--dark-gray);
+        }
+
+        .faq-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--medium-gray);
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--primary-white);
+            text-align: left;
+            padding: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .faq-question:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 1.5rem;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .faq-answer p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+        }
+
+        /* Urgency Section */
+        .urgency {
+            background: linear-gradient(135deg, #1a0000, #000000);
+            text-align: center;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .countdown-item {
+            background: var(--medium-gray);
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            min-width: 100px;
+        }
+
+        .countdown-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-red);
+            font-family: var(--font-heading);
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .urgency-stats {
+            margin-top: 3rem;
+            font-size: 1.2rem;
+        }
+
+        .urgency-warning {
+            background: var(--accent-red-soft);
+            border: 1px solid var(--accent-red);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Final CTA Section */
+        .final-cta {
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .final-cta h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 3rem auto;
+        }
+
+        .cta-card {
+            padding: 2rem;
+            border-radius: 12px;
+            background: var(--medium-gray);
+        }
+
+        .cta-card.negative {
+            border: 2px solid rgba(255, 0, 0, 0.3);
+        }
+
+        .cta-card.positive {
+            border: 2px solid var(--accent-red);
+            background: linear-gradient(135deg, var(--medium-gray), #2a0000);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-gray);
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-red);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--medium-gray);
+            border-radius: 50%;
+            color: var(--primary-white);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: var(--accent-red);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .countdown {
+                flex-wrap: wrap;
+            }
+
+            .final-cta h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">TubeMagic</a>
+            <ul class="nav-links">
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#start" class="cta-link">Start Now</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>You'll NEVER Create Content the Old Way Again...</h1>
+            <p>Create complete YouTube videos in minutes, not days. Let AI handle the script, voice, and visuals while you focus on growing your channel.</p>
+            <a href="#how-it-works" class="cta-button">Show Me How It Works</a>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pain Points Section -->
+    <section class="section pain-points" id="pain-points">
+        <h2 class="section-title">The Creator's Journey Nobody Talks About</h2>
+        <div class="pain-journey">
+            <div class="pain-card">
+                <h3>😤 Frustration</h3>
+                <p>Staring at a blank screen for hours, struggling to write the perfect script</p>
+            </div>
+            <div class="pain-card">
+                <h3>⏰ Procrastination</h3>
+                <p>Knowing you need to post but dreading the endless editing process</p>
+            </div>
+            <div class="pain-card">
+                <h3>🔥 Burnout</h3>
+                <p>Juggling 5 different tools just to produce one video</p>
+            </div>
+            <div class="pain-card">
+                <h3>😔 Self-Doubt</h3>
+                <p>Watching others grow while you're stuck in production hell</p>
+            </div>
+        </div>
+        <div class="quote-box">
+            "You're not lazy. You're just burning out on tools that don't talk to each other."
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="section" id="how-it-works">
+        <h2 class="section-title">Meet TubeMagic</h2>
+        <p style="text-align: center; font-size: 1.2rem; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+            The only all-in-one platform that turns a simple topic into a complete YouTube video in 4 simple steps.
+        </p>
+
+        <div class="process-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Enter Topic</h3>
+                <p>Type in what you want to create</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>AI Writes Script</h3>
+                <p>Advanced AI crafts engaging content</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>AI Voice + Visuals</h3>
+                <p>Automatic narration and video clips</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Publish in Minutes</h3>
+                <p>Download and upload to YouTube</p>
+            </div>
+        </div>
+
+        <div class="comparison">
+            <div class="comparison-card old-way">
+                <h3>The Old Way</h3>
+                <ul class="comparison-list">
+                    <li>Hours of research and script writing</li>
+                    <li>Paying for multiple subscriptions</li>
+                    <li>Learning complex video editing</li>
+                    <li>Waiting for voice actors</li>
+                    <li>Searching for stock footage</li>
+                    <li>3-5 days per video</li>
+                </ul>
+            </div>
+            <div class="comparison-card new-way">
+                <h3>The TubeMagic Way</h3>
+                <ul class="comparison-list">
+                    <li>AI researches and writes for you</li>
+                    <li>One platform, one price</li>
+                    <li>No editing skills required</li>
+                    <li>Instant AI voice generation</li>
+                    <li>Built-in visual library</li>
+                    <li>15-30 minutes per video</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="section" id="testimonials" style="background: var(--dark-gray);">
+        <h2 class="section-title">Join Thousands of Successful Creators</h2>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number" id="active-creators">2,147</div>
+                <div class="stat-label">Active Creators</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" id="videos-created">15,892</div>
+                <div class="stat-label">Videos Created</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" id="hours-saved">89,340</div>
+                <div class="stat-label">Hours Saved</div>
+            </div>
+        </div>
+
+        <div class="testimonials">
+            <div class="testimonial-carousel">
+                <div class="testimonial-track" id="testimonial-track">
+                    <div class="testimonial">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">"I went from posting once a week to posting daily. TubeMagic completely transformed my channel. I hit 10K subscribers in 3 months!"</p>
+                        <p class="testimonial-author">— Sarah M., Tech Creator</p>
+                    </div>
+                    <div class="testimonial">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">"As someone with no video editing experience, this is a game-changer. I created my first video in 20 minutes and it got 50K views!"</p>
+                        <p class="testimonial-author">— James L., Finance Niche</p>
+                    </div>
+                    <div class="testimonial">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">"I was spending $300/month on tools. TubeMagic does everything better for a fraction of the cost. Plus my content quality actually improved!"</p>
+                        <p class="testimonial-author">— Maria K., Lifestyle Vlogger</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-nav">
+                <button class="carousel-dot active" data-index="0"></button>
+                <button class="carousel-dot" data-index="1"></button>
+                <button class="carousel-dot" data-index="2"></button>
+            </div>
+            <div class="live-update">Last creator joined <span id="last-joined">7</span> mins ago</div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <h2 class="section-title">Here's What You Get When You Start Today</h2>
+
+        <div class="features-grid">
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div class="feature-content">
+                    <h3>AI Script Writer</h3>
+                    <p>Generate engaging, SEO-optimized scripts in seconds</p>
+                </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div class="feature-content">
+                    <h3>Professional AI Voices</h3>
+                    <p>Choose from dozens of natural-sounding voice options</p>
+                </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div class="feature-content">
+                    <h3>Automatic Visuals</h3>
+                    <p>AI selects and syncs relevant video clips and images</p>
+                </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div class="feature-content">
+                    <h3>Background Music</h3>
+                    <p>Royalty-free music library with auto-mixing</p>
+                </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div class="feature-content">
+                    <h3>Subtitle Generator</h3>
+                    <p>Auto-generated, perfectly timed captions</p>
+                </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div class="feature-content">
+                    <h3>Thumbnail Creator</h3>
+                    <p>Eye-catching thumbnails designed for clicks</p>
+                </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div class="feature-content">
+                    <h3>SEO Optimizer</h3>
+                    <p>Titles, descriptions, and tags optimized for search</p>
+                </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div class="feature-content">
+                    <h3>Unlimited Exports</h3>
+                    <p>No limits on how many videos you can create</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bonus-box">
+            <h3>🎁 BONUS: FREE Onboarding Video</h3>
+            <p>Get a personalized walkthrough showing you how to create your first viral video in under 30 minutes</p>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section faq" id="faq">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-question">
+                    How is this different from ChatGPT?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>ChatGPT only writes text. TubeMagic takes you from idea to finished video with voiceover, visuals, music, and subtitles. It's specifically trained on what makes YouTube content perform well, not general knowledge.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Do I need any technical or video editing skills?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>None at all! TubeMagic is designed for complete beginners. If you can type a topic and click a button, you can create professional videos. Our interface is simpler than posting on social media.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Can I create faceless videos?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Absolutely! TubeMagic specializes in faceless content. Perfect for creators who want privacy, or those creating educational, documentary-style, or compilation content.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    How long does it take to create a video?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Most creators produce a complete 5-10 minute video in 15-30 minutes. That includes script generation, voice synthesis, visual selection, and export. Some of our advanced users create daily content in under 20 minutes per video.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Can I customize the output?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes! While TubeMagic automates everything, you have full control to edit scripts, change voices, swap visuals, adjust timing, and modify any element before export. Think of it as having a smart assistant that does the heavy lifting while you maintain creative control.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    What if I don't get results?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>We offer a 30-day money-back guarantee. If you create videos following our best practices and don't see improvement in your channel performance, we'll refund you completely. No questions asked.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Urgency Section -->
+    <section class="section urgency" id="pricing">
+        <h2 class="section-title">Price Increases In:</h2>
+
+        <div class="countdown">
+            <div class="countdown-item">
+                <div class="countdown-number" id="hours">23</div>
+                <div class="countdown-label">Hours</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="minutes">47</div>
+                <div class="countdown-label">Minutes</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="seconds">32</div>
+                <div class="countdown-label">Seconds</div>
+            </div>
+        </div>
+
+        <div class="urgency-stats">
+            <p><strong><span id="joined-today">347</span> creators</strong> joined today</p>
+            <p>Only <strong>53 spots</strong> left at this price</p>
+        </div>
+
+        <div class="urgency-warning">
+            <p><strong>⚠️ The Algorithm Doesn't Wait</strong></p>
+            <p>While you're thinking about it, your competitors are posting. Every day you delay is another day of lost views, subscribers, and revenue.</p>
+        </div>
+
+        <a href="#start" class="cta-button" style="margin-top: 2rem;">Lock In My Discount Now</a>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="final-cta" id="start">
+        <h2>Don't Burn Out. Build Up.</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem; color: rgba(255, 255, 255, 0.8);">
+            You have two choices right now...
+        </p>
+
+        <div class="cta-comparison">
+            <div class="cta-card negative">
+                <h3>Stay Stuck</h3>
+                <ul class="comparison-list">
+                    <li>Keep struggling with complex tools</li>
+                    <li>Watch competitors grow faster</li>
+                    <li>Spend weeks creating content</li>
+                    <li>Pay for 5+ different subscriptions</li>
+                    <li>Risk creator burnout</li>
+                </ul>
+            </div>
+            <div class="cta-card positive">
+                <h3>Transform Today</h3>
+                <ul class="comparison-list">
+                    <li>Create videos in 15 minutes</li>
+                    <li>Post consistently every day</li>
+                    <li>Save thousands on tools</li>
+                    <li>Grow your channel 10x faster</li>
+                    <li>Actually enjoy creating again</li>
+                </ul>
+            </div>
+        </div>
+
+        <a href="#" class="cta-button" style="font-size: 1.3rem; padding: 1.5rem 4rem;">Start Creating Now</a>
+        <p style="margin-top: 1rem; color: rgba(255, 255, 255, 0.6);">No credit card required • Free trial available</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>TubeMagic</h3>
+                <p style="color: rgba(255, 255, 255, 0.7);">Transform your YouTube content creation with AI-powered automation. Create professional videos in minutes, not days.</p>
+                <div class="social-links" style="margin-top: 1rem;">
+                    <a href="#" class="social-link" aria-label="YouTube">Y</a>
+                    <a href="#" class="social-link" aria-label="Twitter">T</a>
+                    <a href="#" class="social-link" aria-label="Instagram">I</a>
+                    <a href="#" class="social-link" aria-label="LinkedIn">L</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#start">Get Started</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Video Tutorials</a></li>
+                    <li><a href="#">Case Studies</a></li>
+                    <li><a href="#">Creator Community</a></li>
+                    <li><a href="#">Support Center</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Refund Policy</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 TubeMagic. All rights reserved.</p>
+            <div class="stats" style="margin-top: 1rem; font-size: 0.9rem;">
+                <span><strong id="footer-creators">2,147</strong> Active Creators</span>
+                <span><strong id="footer-videos">15,892</strong> Videos Created</span>
+                <span><strong id="footer-hours">89,340</strong> Hours Saved</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Testimonial Carousel
+        let currentTestimonial = 0;
+        const testimonialTrack = document.getElementById('testimonial-track');
+        const dots = document.querySelectorAll('.carousel-dot');
+
+        function showTestimonial(index) {
+            currentTestimonial = index;
+            testimonialTrack.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                showTestimonial(parseInt(dot.dataset.index));
+            });
+        });
+
+        // Auto-rotate testimonials
+        setInterval(() => {
+            currentTestimonial = (currentTestimonial + 1) % 3;
+            showTestimonial(currentTestimonial);
+        }, 5000);
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const isActive = faqItem.classList.contains('active');
+
+                // Close all FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Countdown Timer
+        function updateCountdown() {
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
+
+            let hours = parseInt(hoursEl.textContent);
+            let minutes = parseInt(minutesEl.textContent);
+            let seconds = parseInt(secondsEl.textContent);
+
+            seconds--;
+
+            if (seconds < 0) {
+                seconds = 59;
+                minutes--;
+            }
+
+            if (minutes < 0) {
+                minutes = 59;
+                hours--;
+            }
+
+            if (hours < 0) {
+                hours = 23;
+                minutes = 59;
+                seconds = 59;
+            }
+
+            hoursEl.textContent = hours.toString().padStart(2, '0');
+            minutesEl.textContent = minutes.toString().padStart(2, '0');
+            secondsEl.textContent = seconds.toString().padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+
+        // Live Stats Counter
+        function updateStats() {
+            const activeCreators = document.getElementById('active-creators');
+            const videosCreated = document.getElementById('videos-created');
+            const hoursSaved = document.getElementById('hours-saved');
+
+            // Randomly increment stats occasionally
+            if (Math.random() > 0.7) {
+                const current = parseInt(activeCreators.textContent.replace(',', ''));
+                activeCreators.textContent = (current + 1).toLocaleString();
+
+                // Update footer stats
+                document.getElementById('footer-creators').textContent = (current + 1).toLocaleString();
+            }
+
+            if (Math.random() > 0.5) {
+                const current = parseInt(videosCreated.textContent.replace(',', ''));
+                videosCreated.textContent = (current + 1).toLocaleString();
+
+                // Update footer stats
+                document.getElementById('footer-videos').textContent = (current + 1).toLocaleString();
+            }
+
+            if (Math.random() > 0.6) {
+                const current = parseInt(hoursSaved.textContent.replace(',', ''));
+                hoursSaved.textContent = (current + Math.floor(Math.random() * 10) + 1).toLocaleString();
+
+                // Update footer stats
+                document.getElementById('footer-hours').textContent = (current + Math.floor(Math.random() * 10) + 1).toLocaleString();
+            }
+        }
+
+        setInterval(updateStats, 5000);
+
+        // Last joined timer
+        function updateLastJoined() {
+            const lastJoinedEl = document.getElementById('last-joined');
+            let minutes = parseInt(lastJoinedEl.textContent);
+
+            if (Math.random() > 0.8) {
+                minutes = Math.floor(Math.random() * 15) + 1;
+                lastJoinedEl.textContent = minutes;
+            }
+        }
+
+        setInterval(updateLastJoined, 10000);
+
+        // Joined today counter
+        function updateJoinedToday() {
+            const joinedTodayEl = document.getElementById('joined-today');
+            if (Math.random() > 0.7) {
+                const current = parseInt(joinedTodayEl.textContent);
+                joinedTodayEl.textContent = current + 1;
+            }
+        }
+
+        setInterval(updateJoinedToday, 15000);
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+    </script>
+</body>
+</html>
